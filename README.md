@@ -10,13 +10,11 @@ A simple, fast multi-threaded port scanner built with Python and CustomTkinter. 
 - Direct output display inside the application window with execution timing.
 
 ## Preview
-![Main Window](https://github.com/user-attachments/assets/72b07e8f-8a60-4f00-9168-b80a6c2589b9)
-![Scan Results](https://github.com/user-attachments/assets/5eefa41e-393d-4ce4-a4ca-590b48b7e72f)
 
-
-
-
-
+<p align="center">
+  <img width="45%" alt="offnenesfenster" src="https://github.com/user-attachments/assets/72b07e8f-8a60-4f00-9168-b80a6c2589b9" />
+  <img width="45%" alt="scanndoen" src="https://github.com/user-attachments/assets/5eefa41e-393d-4ce4-a4ca-590b48b7e72f" />
+</p>
 
 ## Requirements
 - Python 3.x
@@ -24,13 +22,20 @@ A simple, fast multi-threaded port scanner built with Python and CustomTkinter. 
 
 ## Installation & Running
 
-1. Clone or download the repository.
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/mockthemighty/Port_Scanner.git](https://github.com/mockthemighty/Port_Scanner.git)
+   cd Port_Scanner
 2. Install the required dependency:
    ```bash
-   pip install customtkinter
+   pip install customtkinter      
 
-Run the script:
-  python scanner.py
+4. Run the script:
+   ```bash
+   python scanner.py
 
-#Disclaimer
+# Disclaimer
+
 This tool is provided for educational and authorized testing purposes only. The author assumes no liability and is not responsible for any misuse or damage caused by this program.
+
+   
