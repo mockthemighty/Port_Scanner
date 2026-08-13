@@ -13,7 +13,12 @@ A simple, fast multi-threaded port scanner built with Python and CustomTkinter. 
 
 | Main Window | Scan Results |
 | :---: | :---: |
-| ![Main Window](offnenesfenster.png) | ![Scan Results](scanndoen.png) |
+| ![Main Window](<img width="704" height="534" alt="offnenesfenster" src="https://github.com/user-attachments/assets/4a279490-f441-41db-bf37-785146a23296" />) | 
+
+![Scan Results](<img width="697" height="532" alt="scanndoen" src="https://github.com/user-attachments/assets/60563843-ee13-48c7-b879-e39cc257b42c" />) |
+
+
+
 
 ## Requirements
 - Python 3.x
