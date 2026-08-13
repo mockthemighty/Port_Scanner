@@ -1,5 +1,5 @@
 # Disclaimer
-#This tool is provided for educational and authorized testing purposes only. The author assumes no liability and is not responsible for any misuse or damage caused by this program.
+# This tool is provided for educational and authorized testing purposes only. The author assumes no liability and is not responsible for any misuse or damage caused by this program.
 import socket
 import sys
 from datetime import datetime
@@ -7,75 +7,106 @@ import os
 import concurrent.futures
 import customtkinter
 
-# Blank the screen
+# clear screen
 os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def scanner(args):
-    remoteServerIP, i = args
+    remoteServerIP, port = args
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(0.1)
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # 0.1 should only be used in localhost, as to mitigate false negatives.
-        sock.settimeout(0.5)
-        result = sock.connect_ex((remoteServerIP, i))
+        result = sock.connect_ex((remoteServerIP, port))
         if result == 0:
-            print("Port", i, "is open")
+            return port
+    except (socket.gaierror, socket.error):
+        pass
+    finally:
         sock.close()
-    except KeyboardInterrupt:
-        sys.exit()
-    except socket.gaierror:
-        sys.exit()
-    except socket.error:
-        sys.exit()
-    return i
+    return None  # return None if port is closed
 
 
 def button_callback():
-    print("button clicked")
-    # User input
-    remoteServer = textbox.get("1.0", "end-1c")
-    remoteServerIP = socket.gethostbyname(remoteServer)
+    # enable textbox for writeing
+    openportsoutputarea.configure(state="normal")
+    openportsoutputarea.delete("1.0", "end")
+    openportsoutputarea.insert("end", "Scanning started...\n")
 
-    # Print a banner with information on which host we are about to scan
+    # user input
+    remoteServer = textbox.get("1.0", "end-1c").strip()
+    try:
+        remoteServerIP = socket.gethostbyname(remoteServer)
+    except socket.gaierror:
+        openportsoutputarea.insert("end", "Invalid hostname or IP address.\n")
+        openportsoutputarea.configure(state="disabled")
+        return
+
     print(" ")
     print("Please wait, scanning remote host", remoteServerIP)
     print(" ")
 
-    # Check the date and time the scan was started
+    # get start tike
     time1 = datetime.now()
 
-    # Create tuples containing both the IP and each port for the worker pool
+    # create tuples for worker pool
     tasks = [(remoteServerIP, port) for port in range(1, 2000)]
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=200) as pool:
         results = pool.map(scanner, tasks)
 
-    # Checking time again
     time2 = datetime.now()
-
-    # Calculate the difference in time to know how long the scan took
     totaltime = time2 - time1
 
-    # Print the Information
     print("Total time: ", totaltime)
+    openportsoutputarea.insert("end", f"\n--- Scan finished in {totaltime} ---\n")
 
+    for port in results:
+        if port is not None:
+            openportsoutputarea.insert("end", f"Port {port} is open\n")
+
+    # lock it back up (read-only)
+    openportsoutputarea.configure(state="disabled")
 
 
 if __name__ == '__main__':
-
     app = customtkinter.CTk()
-    app.geometry("800x800")
+    app.geometry("700x500")
 
+    # labels
+    current_text = "Please enter the remote host:"
+    label = customtkinter.CTkLabel(
+        app,
+        text=current_text,
+        fg_color="transparent",
+        font=("Arial", 20, "bold"),
+        text_color="white",
+    )
+    label.place(x=0, y=70)
 
-    label = customtkinter.CTkLabel(app, text="CTkLabel", fg_color="transparent")#
-    label.pack(padx=20, pady=11)
-    label.configure(text="Port-Scanner")
-    text = label.cget("text")
-    button = customtkinter.CTkButton(app, text="Start_Scan", command=button_callback)
-    button.pack(padx=20, pady=20)
-    textbox = customtkinter.CTkTextbox(app)
-    textbox.pack(padx=20, pady=10, fill="both", expand=True)
-    textbox.insert("0.0", "new text to insert")
-    #textbox.configure(state="enabled")
+    button = customtkinter.CTkButton(
+        app,
+        text="Start_Scan",
+        command=button_callback,
+        width=280,
+        height=50,
+        font=("Arial", 20,),
+        text_color="white",
+    )
+    button.place(x=400, y=100)
+
+    textbox = customtkinter.CTkTextbox(
+        app,
+        width=280,
+        height=50,
+    )
+    textbox.place(x=0, y=100)
+    textbox.insert("0.0", "127.0.0.1")
+
+    openportsoutputarea = customtkinter.CTkTextbox(
+        app,
+        width=700,
+        height=270,
+    )
+    openportsoutputarea.place(x=0, y=200)
 
     app.mainloop()
