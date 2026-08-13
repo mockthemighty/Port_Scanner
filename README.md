@@ -10,12 +10,10 @@ A simple, fast multi-threaded port scanner built with Python and CustomTkinter. 
 - Direct output display inside the application window with execution timing.
 
 ## Preview
+![Main Window](https://github.com/user-attachments/assets/72b07e8f-8a60-4f00-9168-b80a6c2589b9)
+![Scan Results](https://github.com/user-attachments/assets/5eefa41e-393d-4ce4-a4ca-590b48b7e72f)
 
-| Main Window | Scan Results |
-| :---: | :---: |
-| ![Main Window](<img width="704" height="534" alt="offnenesfenster" src="https://github.com/user-attachments/assets/4a279490-f441-41db-bf37-785146a23296" />) | 
 
-![Scan Results](<img width="697" height="532" alt="scanndoen" src="https://github.com/user-attachments/assets/60563843-ee13-48c7-b879-e39cc257b42c" />) |
 
 
 
