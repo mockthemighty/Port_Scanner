@@ -24,7 +24,7 @@ A simple, fast multi-threaded port scanner built with Python and CustomTkinter. 
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/mockthemighty/Port_Scanner.git](https://github.com/mockthemighty/Port_Scanner.git)
+   git clone https://github.com/mockthemighty/Port_Scanner.git
    cd Port_Scanner
 2. Install the required dependency:
    ```bash
